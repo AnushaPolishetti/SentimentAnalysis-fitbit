@@ -1,10 +1,7 @@
 from flask import Flask,render_template,request,send_file
 import pickle
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import nltk
 import re
 import string
@@ -17,7 +14,7 @@ from sklearn.model_selection import train_test_split
 import tensorflow as tf
 from imblearn.combine import SMOTETomek
 from sklearn.ensemble import RandomForestClassifier
-sns.set()
+
 
 
 model = pickle.load(open('model.pkl','rb'))
