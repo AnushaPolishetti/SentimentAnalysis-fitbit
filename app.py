@@ -1,7 +1,5 @@
 from flask import Flask,render_template,request,send_file
 import pickle
-import io 
-import base64
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import pandas as pd
 import numpy as np
@@ -20,9 +18,7 @@ import tensorflow as tf
 from imblearn.combine import SMOTETomek
 from sklearn.ensemble import RandomForestClassifier
 sns.set()
-import json
-import plotly
-import plotly.express as px
+
 
 model = pickle.load(open('model.pkl','rb'))
 
@@ -101,15 +97,6 @@ def model_random_forest(X_test_array= None):
     
     return pred_df
 
-def visualization(sentences_df = None):
-    
-    fig_pie, ax_pie = plt.subplots(figsize = (20,20))
-    ax_pie.pie(np.unique(sentences_df['Polarity'], return_counts= True)[1], labels = ['Negative', 'Neutral', 'Positive'], explode = (0, 0, 0.1), autopct = '%1.1f%%', shadow = True, startangle = 90, textprops={'fontsize': 30})
-    ax_pie.axis('equal')
-    ax_pie.set_title('Sentiment Pie Chart', fontsize = 40)
-    graphJSON = json.dumps(fig_pie, cls=plotly.utils.PlotlyJSONEncoder)
-
-    return graphJSON
 
 app = Flask(__name__)
 @app.route('/')
@@ -140,7 +127,7 @@ def predict():
     else:
         result = "Try improving your product! It's a negative Review 😔"
     # graphJSON  = visualization(dftest)
-    return render_template('models.html',message=result, msg=inp)
+    return render_template('models.html',message=result)
 
 if __name__ == '__main__':
     app.run()
